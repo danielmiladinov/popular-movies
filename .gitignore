@@ -99,3 +99,6 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
+# Store secrets, such as API keys, in this file, which will not be committed to source control
+app/src/main/res/values/secrets.xml
+
