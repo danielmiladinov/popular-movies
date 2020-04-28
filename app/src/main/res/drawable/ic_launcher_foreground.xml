@@ -1,0 +1,13 @@
+<!-- Movie by Adrien Coquet from the Noun Project -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="217.93275"
+    android:viewportHeight="217.93275">
+  <group android:translateX="58.966377"
+      android:translateY="68.66323">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M93.8,11.4H6.2c-2,0 -3.7,1.7 -3.7,3.7V85c0,2 1.7,3.7 3.7,3.7h87.6c2,0 3.7,-1.7 3.7,-3.7V15C97.5,13 95.8,11.4 93.8,11.4zM48,18.7h9.6l-5.1,10.6h-9.6L48,18.7zM15.9,29.4h-6V18.7H21L15.9,29.4zM34.2,29.4h-9.6l5.1,-10.6h9.6L34.2,29.4zM61.3,61.6l-16.4,10c-2.1,1.2 -4.7,-0.2 -4.7,-2.6V49c0,-2.4 2.6,-3.9 4.7,-2.6l16.4,10C63.3,57.5 63.3,60.4 61.3,61.6zM70.9,29.4h-9.6l5.1,-10.6h9.6L70.9,29.4zM90.1,29.4H79.5l5.1,-10.6h5.5V29.4z"/>
+  </group>
+</vector>
