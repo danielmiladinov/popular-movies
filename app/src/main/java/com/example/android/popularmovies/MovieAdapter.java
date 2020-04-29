@@ -11,21 +11,26 @@ import com.example.android.popularmovies.model.Movie;
 import com.example.android.popularmovies.utils.MovieUtils;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>(20);
     private final int imageHeight;
     private final int imageWidth;
 
     MovieAdapter(int imageHeight, int imageWidth) {
         this.imageHeight = imageHeight;
         this.imageWidth = imageWidth;
+        setHasStableIds(true);
     }
 
-    void setMovies(List<Movie> movies) {
-        this.movies = movies;
-        notifyDataSetChanged();
+    void addMovies(List<Movie> newMovies) {
+        int positionStart = movies.size() - 1;
+        int itemCount = newMovies.size();
+
+        this.movies.addAll(newMovies);
+        notifyItemRangeInserted(positionStart, itemCount);
     }
 
     @NonNull
@@ -46,6 +51,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return movies == null ? 0 : movies.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return movies.get(position).getId();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

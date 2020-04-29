@@ -17,6 +17,7 @@ import com.example.android.popularmovies.repository.movie.TheMovieDbDotOrg;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final float HEIGHT_TO_WIDTH = 1.5f;
 
     private RecyclerView moviePosters;
+    private RecyclerView.OnScrollListener scrollListener;
     private MovieAdapter movieAdapter;
     private TextView errorMessageDisplay;
     private ProgressBar loadingIndicator;
@@ -39,13 +41,26 @@ public class MainActivity extends AppCompatActivity {
         int imageWidth = displayMetrics.widthPixels / numberOfColumns;
         int imageHeight = Math.round(imageWidth * HEIGHT_TO_WIDTH);
 
-        GridLayoutManager twoColumnGrid = new GridLayoutManager(MainActivity.this, numberOfColumns);
+        GridLayoutManager twoColumnGrid = new GridLayoutManager(
+            MainActivity.this,
+            numberOfColumns
+        );
+
+        scrollListener = new EndlessRecyclerViewScrollListener(twoColumnGrid) {
+            @Override
+            void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                popularMoviesResultsPage = page;
+                loadMoviesData();
+            }
+        };
+
         movieAdapter = new MovieAdapter(imageHeight, imageWidth);
 
         moviePosters = findViewById(R.id.rv_movie_posters);
         moviePosters.setLayoutManager(twoColumnGrid);
         moviePosters.setHasFixedSize(true);
         moviePosters.setAdapter(movieAdapter);
+        moviePosters.addOnScrollListener(scrollListener);
 
         errorMessageDisplay = findViewById(R.id.tv_error_message_display);
 
@@ -99,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         PopularMoviesResponse response = TheMovieDbDotOrg.getPopularMovies(apiKey, page);
-                        return response.getResults();
+                        return response != null ? response.getResults() : new ArrayList<Movie>();
                     } catch (IOException e) {
                         e.printStackTrace();
                         return null;
@@ -120,7 +135,10 @@ public class MainActivity extends AppCompatActivity {
                 ma.loadingIndicator.setVisibility(View.INVISIBLE);
                 if (movies != null) {
                     ma.showMoviesDataView();
-                    ma.movieAdapter.setMovies(movies);
+
+                    if (movies.size() > 0) {
+                        ma.movieAdapter.addMovies(movies);
+                    }
                 } else {
                     ma.showErrorMessage();
                 }
