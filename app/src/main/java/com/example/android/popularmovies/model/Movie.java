@@ -1,5 +1,7 @@
 package com.example.android.popularmovies.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class Movie {
@@ -93,5 +95,26 @@ public class Movie {
 
     public Double getVoteAverage() {
         return voteAverage;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Movie{" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", originalTitle='" + originalTitle + '\'' +
+            ", originalLanguage='" + originalLanguage + '\'' +
+            ", releaseDate='" + releaseDate + '\'' +
+            ", overview='" + overview + '\'' +
+            ", posterPath='" + posterPath + '\'' +
+            ", backdropPath='" + backdropPath + '\'' +
+            ", genreIds=" + genreIds +
+            ", video=" + video +
+            ", adult=" + adult +
+            ", popularity=" + popularity +
+            ", voteCount=" + voteCount +
+            ", voteAverage=" + voteAverage +
+            '}';
     }
 }

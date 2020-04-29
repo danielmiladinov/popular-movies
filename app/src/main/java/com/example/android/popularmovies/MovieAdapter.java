@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.popularmovies.model.Movie;
 import com.example.android.popularmovies.utils.MovieUtils;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,11 +68,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         }
 
         void setMovie(Movie m) {
-            String posterPath = MovieUtils.absolutePosterImagePathOf(m);
             Picasso p = Picasso.get();
             p.setIndicatorsEnabled(true);
             p.setLoggingEnabled(true);
-            p.load(posterPath).resize(imageWidth, imageHeight).into(moviePoster);
+
+            RequestCreator picassoRequest;
+
+            if (!m.getPosterPath().equals("null")) {
+                String posterPath = MovieUtils.absolutePosterImagePathOf(m);
+                picassoRequest = p.load(posterPath);
+            } else {
+                picassoRequest = p.load(R.drawable.no_poster_available);
+            }
+
+            picassoRequest.resize(imageWidth, imageHeight).into(moviePoster);
             moviePoster.setContentDescription(m.getTitle());
         }
     }
