@@ -3,27 +3,27 @@ package com.example.android.popularmovies.model;
 import java.util.List;
 
 public class PopularMoviesResponse {
-    private final Integer page;
-    private final Integer totalResults;
-    private final Integer totalPages;
+    private final Long page;
+    private final Long totalResults;
+    private final Long totalPages;
     private final List<Movie> results;
 
-    public PopularMoviesResponse(Integer page, Integer totalResults, Integer totalPages, List<Movie> results) {
+    public PopularMoviesResponse(Long page, Long totalResults, Long totalPages, List<Movie> results) {
         this.page = page;
         this.totalResults = totalResults;
         this.totalPages = totalPages;
         this.results = results;
     }
 
-    public Integer getPage() {
+    public Long getPage() {
         return page;
     }
 
-    public Integer getTotalResults() {
+    public Long getTotalResults() {
         return totalResults;
     }
 
-    public Integer getTotalPages() {
+    public Long getTotalPages() {
         return totalPages;
     }
 

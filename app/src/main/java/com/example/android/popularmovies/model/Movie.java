@@ -3,7 +3,7 @@ package com.example.android.popularmovies.model;
 import java.util.List;
 
 public class Movie {
-    private final Integer id;
+    private final Long id;
     private final String title;
     private final String originalTitle;
     private final String originalLanguage;
@@ -11,17 +11,17 @@ public class Movie {
     private final String overview;
     private final String posterPath;
     private final String backdropPath;
-    private final List<Integer> genreIds;
+    private final List<Long> genreIds;
     private final Boolean video;
     private final Boolean adult;
     private final Double popularity;
-    private final Integer voteCount;
+    private final Long voteCount;
     private final Double voteAverage;
 
     public Movie(
-        Integer id, String title, String originalTitle, String originalLanguage, String releaseDate,
-        String overview, String posterPath, String backdropPath, List<Integer> genreIds,
-        Boolean video, Boolean adult, Double popularity, Integer voteCount, Double voteAverage
+        Long id, String title, String originalTitle, String originalLanguage, String releaseDate,
+        String overview, String posterPath, String backdropPath, List<Long> genreIds,
+        Boolean video, Boolean adult, Double popularity, Long voteCount, Double voteAverage
     ) {
         this.id = id;
         this.title = title;
@@ -39,7 +39,7 @@ public class Movie {
         this.voteAverage = voteAverage;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -71,7 +71,7 @@ public class Movie {
         return backdropPath;
     }
 
-    public List<Integer> getGenreIds() {
+    public List<Long> getGenreIds() {
         return genreIds;
     }
 
@@ -87,7 +87,7 @@ public class Movie {
         return popularity;
     }
 
-    public Integer getVoteCount() {
+    public Long getVoteCount() {
         return voteCount;
     }
 

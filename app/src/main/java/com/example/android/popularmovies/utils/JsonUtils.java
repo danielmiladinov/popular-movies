@@ -34,9 +34,9 @@ public class JsonUtils {
     public static PopularMoviesResponse popularMoviesResponseFrom(String json) {
         try {
             JSONObject responseJson = new JSONObject(json);
-            Integer page = responseJson.getInt(POPULAR_MOVIES_RESPONSE_PROPERTY_PAGE);
-            Integer totalResults = responseJson.getInt(POPULAR_MOVIES_RESPONSE_PROPERTY_TOTAL_RESULTS);
-            Integer totalPages = responseJson.getInt(POPULAR_MOVIES_RESPONSE_PROPERTY_TOTAL_PAGES);
+            Long page = responseJson.getLong(POPULAR_MOVIES_RESPONSE_PROPERTY_PAGE);
+            Long totalResults = responseJson.getLong(POPULAR_MOVIES_RESPONSE_PROPERTY_TOTAL_RESULTS);
+            Long totalPages = responseJson.getLong(POPULAR_MOVIES_RESPONSE_PROPERTY_TOTAL_PAGES);
 
             JSONArray resultsJson = responseJson.getJSONArray(POPULAR_MOVIES_RESPONSE_PROPERTY_RESULTS);
             List<Movie> results = moviesFrom(resultsJson);
@@ -59,7 +59,7 @@ public class JsonUtils {
     }
 
     private static Movie movieFrom(JSONObject movieJson) throws JSONException {
-        Integer id = movieJson.getInt(MOVIE_PROPERTY_ID);
+        Long id = movieJson.getLong(MOVIE_PROPERTY_ID);
         String title = movieJson.getString(MOVIE_PROPERTY_TITLE);
         String originalTitle = movieJson.getString(MOVIE_PROPERTY_ORIGINAL_TITLE);
         String originalLanguage = movieJson.getString(MOVIE_PROPERTY_ORIGINAL_LANGUAGE);
@@ -67,11 +67,11 @@ public class JsonUtils {
         String overview = movieJson.getString(MOVIE_PROPERTY_OVERVIEW);
         String posterPath = movieJson.getString(MOVIE_PROPERTY_POSTER_PATH);
         String backdropPath = movieJson.getString(MOVIE_PROPERTY_BACKDROP_PATH);
-        List<Integer> genreIds = genreIdsFrom(movieJson.getJSONArray(MOVIE_PROPERTY_GENRE_IDS));
+        List<Long> genreIds = genreIdsFrom(movieJson.getJSONArray(MOVIE_PROPERTY_GENRE_IDS));
         Boolean video = movieJson.getBoolean(MOVIE_PROPERTY_VIDEO);
         Boolean adult = movieJson.getBoolean(MOVIE_PROPERTY_ADULT);
         Double popularity = movieJson.getDouble(MOVIE_PROPERTY_POPULARITY);
-        Integer voteCount = movieJson.getInt(MOVIE_PROPERTY_VOTE_COUNT);
+        Long voteCount = movieJson.getLong(MOVIE_PROPERTY_VOTE_COUNT);
         Double voteAverage = movieJson.getDouble(MOVIE_PROPERTY_VOTE_AVERAGE);
 
         return new Movie(
@@ -80,11 +80,11 @@ public class JsonUtils {
         );
     }
 
-    private static List<Integer> genreIdsFrom(JSONArray genreIdsJson) throws JSONException {
-        List<Integer> genreIds = new ArrayList<>(genreIdsJson.length());
+    private static List<Long> genreIdsFrom(JSONArray genreIdsJson) throws JSONException {
+        List<Long> genreIds = new ArrayList<>(genreIdsJson.length());
 
         for (int i = 0; i < genreIdsJson.length(); i++) {
-            genreIds.add(i, genreIdsJson.getInt(i));
+            genreIds.add(i, genreIdsJson.getLong(i));
         }
 
         return genreIds;
