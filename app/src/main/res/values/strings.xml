@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Popular Movies</string>
+    <string name="main_activity_title_popular_movies">Popular Movies</string>
+    <string name="main_activity_title_top_rated_movies">Top Rated Movies</string>
     <string name="error_unable_to_load_movies">An error has occurred.\nUnable to load movies.</string>
+    <string name="sort_menu_title">Sort</string>
+    <string name="action_show_popular">Show Popular Movies</string>
+    <string name="action_show_top_rated">Show Top Rated Movies</string>
 </resources>

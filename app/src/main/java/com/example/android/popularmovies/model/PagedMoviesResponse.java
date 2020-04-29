@@ -2,13 +2,13 @@ package com.example.android.popularmovies.model;
 
 import java.util.List;
 
-public class PopularMoviesResponse {
+public class PagedMoviesResponse {
     private final Long page;
     private final Long totalResults;
     private final Long totalPages;
     private final List<Movie> results;
 
-    public PopularMoviesResponse(Long page, Long totalResults, Long totalPages, List<Movie> results) {
+    public PagedMoviesResponse(Long page, Long totalResults, Long totalPages, List<Movie> results) {
         this.page = page;
         this.totalResults = totalResults;
         this.totalPages = totalPages;

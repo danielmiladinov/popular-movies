@@ -1,7 +1,7 @@
 package com.example.android.popularmovies.utils;
 
 import com.example.android.popularmovies.model.Movie;
-import com.example.android.popularmovies.model.PopularMoviesResponse;
+import com.example.android.popularmovies.model.PagedMoviesResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +31,7 @@ public class JsonUtils {
     private static final String MOVIE_PROPERTY_VOTE_COUNT = "vote_count";
     private static final String MOVIE_PROPERTY_VOTE_AVERAGE = "vote_average";
 
-    public static PopularMoviesResponse popularMoviesResponseFrom(String json) {
+    public static PagedMoviesResponse pagedMoviesResponseFrom(String json) {
         try {
             JSONObject responseJson = new JSONObject(json);
             Long page = responseJson.getLong(POPULAR_MOVIES_RESPONSE_PROPERTY_PAGE);
@@ -41,7 +41,7 @@ public class JsonUtils {
             JSONArray resultsJson = responseJson.getJSONArray(POPULAR_MOVIES_RESPONSE_PROPERTY_RESULTS);
             List<Movie> results = moviesFrom(resultsJson);
 
-            return new PopularMoviesResponse(page, totalResults, totalPages, results);
+            return new PagedMoviesResponse(page, totalResults, totalPages, results);
 
         } catch (JSONException je) {
             return null;

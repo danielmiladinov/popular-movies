@@ -3,16 +3,19 @@ package com.example.android.popularmovies;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.popularmovies.model.Movie;
-import com.example.android.popularmovies.model.PopularMoviesResponse;
+import com.example.android.popularmovies.model.PagedMoviesResponse;
 import com.example.android.popularmovies.repository.movie.TheMovieDbDotOrg;
 
 import java.io.IOException;
@@ -21,14 +24,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    enum MoviesType { POPULAR, TOP_RATED }
+
     private static final int numberOfColumns = 2;
     private static final float HEIGHT_TO_WIDTH = 1.5f;
 
     private RecyclerView moviePosters;
-    private RecyclerView.OnScrollListener scrollListener;
+    private EndlessRecyclerViewScrollListener scrollListener;
     private MovieAdapter movieAdapter;
     private TextView errorMessageDisplay;
     private ProgressBar loadingIndicator;
+    private MoviesType moviesType = MoviesType.POPULAR;
     private int popularMoviesResultsPage = 1;
 
     @Override
@@ -75,6 +81,13 @@ public class MainActivity extends AppCompatActivity {
         new FetchPopularMoviesTask(this).execute(apiKey, popularMoviesResultsPage);
     }
 
+    private void refresh() {
+        popularMoviesResultsPage = 1;
+        scrollListener.resetState();
+        movieAdapter.resetState();
+        loadMoviesData();
+    }
+
     private void showMoviesDataView() {
         errorMessageDisplay.setVisibility(View.INVISIBLE);
         moviePosters.setVisibility(View.VISIBLE);
@@ -113,7 +126,14 @@ public class MainActivity extends AppCompatActivity {
                     Integer page = (Integer) objects[1];
 
                     try {
-                        PopularMoviesResponse response = TheMovieDbDotOrg.getPopularMovies(apiKey, page);
+                        PagedMoviesResponse response;
+
+                        if (ma.moviesType == MoviesType.TOP_RATED) {
+                            response = TheMovieDbDotOrg.getTopRatedMovies(apiKey, page);
+                        } else {
+                            response = TheMovieDbDotOrg.getPopularMovies(apiKey, page);
+                        }
+
                         return response != null ? response.getResults() : new ArrayList<Movie>();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -143,6 +163,32 @@ public class MainActivity extends AppCompatActivity {
                     ma.showErrorMessage();
                 }
             }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_popular:
+                moviesType = MoviesType.POPULAR;
+                setTitle(getString(R.string.main_activity_title_popular_movies));
+                refresh();
+                return true;
+
+            case R.id.action_top_rated:
+                moviesType = MoviesType.TOP_RATED;
+                setTitle(getString(R.string.main_activity_title_top_rated_movies));
+                refresh();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

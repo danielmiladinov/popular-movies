@@ -26,6 +26,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         setHasStableIds(true);
     }
 
+    void resetState() {
+        movies = new ArrayList<>(20);
+        notifyDataSetChanged();
+    }
+
     void addMovies(List<Movie> newMovies) {
         int positionStart = movies.size() - 1;
         int itemCount = newMovies.size();
