@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.popularmovies.model.Movie;
+import com.example.android.popularmovies.model.MovieSummary;
 import com.example.android.popularmovies.model.PagedMoviesResponse;
 import com.example.android.popularmovies.repository.movie.TheMovieDbDotOrg;
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         moviePosters.setVisibility(View.INVISIBLE);
     }
 
-    static class FetchPopularMoviesTask extends AsyncTask<Object, Void, List<Movie>> {
+    static class FetchPopularMoviesTask extends AsyncTask<Object, Void, List<MovieSummary>> {
         private WeakReference<MainActivity> weakActivity;
 
         FetchPopularMoviesTask(MainActivity launcher) {
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Movie> doInBackground(Object... objects) {
+        protected List<MovieSummary> doInBackground(Object... objects) {
             MainActivity ma = weakActivity.get();
 
             if (ma != null) {
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                             response = TheMovieDbDotOrg.getPopularMovies(apiKey, page);
                         }
 
-                        return response != null ? response.getResults() : new ArrayList<Movie>();
+                        return response != null ? response.getResults() : new ArrayList<MovieSummary>();
                     } catch (IOException e) {
                         e.printStackTrace();
                         return null;
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(List<Movie> movies) {
+        protected void onPostExecute(List<MovieSummary> movies) {
             MainActivity ma = weakActivity.get();
 
             if (ma != null) {

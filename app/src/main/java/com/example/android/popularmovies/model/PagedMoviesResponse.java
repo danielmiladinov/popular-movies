@@ -6,9 +6,9 @@ public class PagedMoviesResponse {
     private final Long page;
     private final Long totalResults;
     private final Long totalPages;
-    private final List<Movie> results;
+    private final List<MovieSummary> results;
 
-    public PagedMoviesResponse(Long page, Long totalResults, Long totalPages, List<Movie> results) {
+    public PagedMoviesResponse(Long page, Long totalResults, Long totalPages, List<MovieSummary> results) {
         this.page = page;
         this.totalResults = totalResults;
         this.totalPages = totalPages;
@@ -27,7 +27,7 @@ public class PagedMoviesResponse {
         return totalPages;
     }
 
-    public List<Movie> getResults() {
+    public List<MovieSummary> getResults() {
         return results;
     }
 }

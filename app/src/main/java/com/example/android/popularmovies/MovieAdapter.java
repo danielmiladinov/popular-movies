@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.popularmovies.model.Movie;
+import com.example.android.popularmovies.model.MovieSummary;
 import com.example.android.popularmovies.utils.MovieUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-    private List<Movie> movies = new ArrayList<>(20);
+    private List<MovieSummary> movies = new ArrayList<>(20);
     private final int imageHeight;
     private final int imageWidth;
 
@@ -31,7 +31,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    void addMovies(List<Movie> newMovies) {
+    void addMovies(List<MovieSummary> newMovies) {
         int positionStart = movies.size() - 1;
         int itemCount = newMovies.size();
 
@@ -50,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Movie m = movies == null ? null : movies.get(position);
+        MovieSummary m = movies == null ? null : movies.get(position);
         holder.setMovie(m);
     }
 
@@ -72,7 +72,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             moviePoster = itemView;
         }
 
-        void setMovie(Movie m) {
+        void setMovie(MovieSummary m) {
             Picasso p = Picasso.get();
             p.setIndicatorsEnabled(true);
             p.setLoggingEnabled(true);

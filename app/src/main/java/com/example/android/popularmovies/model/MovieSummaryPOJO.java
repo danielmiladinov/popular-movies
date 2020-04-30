@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
-public class Movie {
+public class MovieSummaryPOJO implements MovieSummary {
     private final Long id;
     private final String title;
     private final String originalTitle;
@@ -20,7 +20,7 @@ public class Movie {
     private final Long voteCount;
     private final Double voteAverage;
 
-    public Movie(
+    public MovieSummaryPOJO(
         Long id, String title, String originalTitle, String originalLanguage, String releaseDate,
         String overview, String posterPath, String backdropPath, List<Long> genreIds,
         Boolean video, Boolean adult, Double popularity, Long voteCount, Double voteAverage
@@ -41,58 +41,72 @@ public class Movie {
         this.voteAverage = voteAverage;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
+    @Override
     public String getOriginalTitle() {
         return originalTitle;
     }
 
+    @Override
     public String getOriginalLanguage() {
         return originalLanguage;
     }
 
+    @Override
     public String getReleaseDate() {
         return releaseDate;
     }
 
+    @Override
     public String getOverview() {
         return overview;
     }
 
+    @Override
     public String getPosterPath() {
         return posterPath;
     }
 
+    @Override
     public String getBackdropPath() {
         return backdropPath;
     }
 
+    @Override
     public List<Long> getGenreIds() {
         return genreIds;
     }
 
+    @Override
     public Boolean getVideo() {
         return video;
     }
 
+    @Override
     public Boolean getAdult() {
         return adult;
     }
 
+    @Override
     public Double getPopularity() {
         return popularity;
     }
 
+    @Override
     public Long getVoteCount() {
         return voteCount;
     }
 
+    @Override
     public Double getVoteAverage() {
         return voteAverage;
     }
@@ -100,7 +114,7 @@ public class Movie {
     @NonNull
     @Override
     public String toString() {
-        return "Movie{" +
+        return "MovieSummary{" +
             "id=" + id +
             ", title='" + title + '\'' +
             ", originalTitle='" + originalTitle + '\'' +
