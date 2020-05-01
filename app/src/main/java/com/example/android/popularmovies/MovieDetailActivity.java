@@ -40,7 +40,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 RequestCreator picassoRequest;
 
                 if (!m.getPosterPath().equals("null")) {
-                    String posterPath = MovieUtils.absolutePosterImagePathOf(m);
+                    String posterPath = MovieUtils.absolutePosterImagePathOf(m, imageWidth);
                     picassoRequest = p.load(posterPath);
                 } else {
                     picassoRequest = p.load(R.drawable.no_poster_available);
