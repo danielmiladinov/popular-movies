@@ -8,8 +8,6 @@
     <string name="action_show_popular">Show Popular Movies</string>
     <string name="action_show_top_rated">Show Top Rated Movies</string>
     <string name="movie_poster_content_description">Movie Poster</string>
-    <string name="mark_as_favorite">mark as\nfavorite</string>
-
     <string name="error_loading_movie_details">Sorry, but we are unable to the load the details for that movie right now.</string>
     <string name="movie_detail">Movie Detail</string>
     <string name="error_loading_movie_detail">Error Loading Movie Detail</string>
