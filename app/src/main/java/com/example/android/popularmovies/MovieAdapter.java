@@ -84,9 +84,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         void setMovie(MovieSummary m) {
             Picasso p = Picasso.get();
-            p.setIndicatorsEnabled(true);
             p.setLoggingEnabled(true);
-
             RequestCreator picassoRequest;
 
             if (!m.getPosterPath().equals("null")) {

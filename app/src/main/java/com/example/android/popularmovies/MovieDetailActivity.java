@@ -34,9 +34,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
                 ImageView moviePoster = findViewById(R.id.iv_movie_poster);
                 Picasso p = Picasso.get();
-                p.setIndicatorsEnabled(true);
                 p.setLoggingEnabled(true);
-
                 RequestCreator picassoRequest;
 
                 if (!m.getPosterPath().equals("null")) {
