@@ -12,6 +12,8 @@ import com.example.android.popularmovies.utils.MovieUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
+import java.util.Locale;
+
 public class MovieDetailActivity extends AppCompatActivity {
     public static final String MOVIE_DETAIL = "MOVIE_DETAIL";
 
@@ -54,7 +56,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 runtime.setText(String.format("%smin", m.getRuntime()));
 
                 TextView rating = findViewById(R.id.tv_rating);
-                rating.setText(String.format("%2.1f/10", m.getVoteAverage()));
+                rating.setText(String.format(Locale.US, "%2.1f/10", m.getVoteAverage()));
 
                 TextView overview = findViewById(R.id.tv_overview);
                 overview.setText(m.getOverview());
