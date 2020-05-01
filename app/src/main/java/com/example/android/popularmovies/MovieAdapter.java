@@ -1,5 +1,6 @@
 package com.example.android.popularmovies;
 
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,10 +18,12 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private List<MovieSummary> movies = new ArrayList<>(20);
+    private OnMovieClickHandler movieClickHandler;
     private final int imageHeight;
     private final int imageWidth;
 
-    MovieAdapter(int imageHeight, int imageWidth) {
+    MovieAdapter(OnMovieClickHandler movieClickHandler, int imageHeight, int imageWidth) {
+        this.movieClickHandler = movieClickHandler;
         this.imageHeight = imageHeight;
         this.imageWidth = imageWidth;
         setHasStableIds(true);
@@ -64,12 +67,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movies.get(position).getId();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView moviePoster;
 
         ViewHolder(@NonNull ImageView itemView) {
             super(itemView);
             moviePoster = itemView;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            MovieSummary m = movies == null ? null : movies.get(getAdapterPosition());
+            movieClickHandler.onMovieClick(m);
         }
 
         void setMovie(MovieSummary m) {
@@ -89,5 +99,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             picassoRequest.resize(imageWidth, imageHeight).into(moviePoster);
             moviePoster.setContentDescription(m.getTitle());
         }
+    }
+
+    interface OnMovieClickHandler {
+        void onMovieClick(MovieSummary m);
     }
 }

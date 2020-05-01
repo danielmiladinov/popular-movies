@@ -1,6 +1,9 @@
 package com.example.android.popularmovies.model;
 
-public class MovieCollectionSummary {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class MovieCollectionSummary implements Parcelable {
     private final Long id;
     private final String name;
     private final String posterPath;
@@ -12,6 +15,29 @@ public class MovieCollectionSummary {
         this.posterPath = posterPath;
         this.backdropPath = backdropPath;
     }
+
+    private MovieCollectionSummary(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        name = in.readString();
+        posterPath = in.readString();
+        backdropPath = in.readString();
+    }
+
+    public static final Creator<MovieCollectionSummary> CREATOR = new Creator<MovieCollectionSummary>() {
+        @Override
+        public MovieCollectionSummary createFromParcel(Parcel in) {
+            return new MovieCollectionSummary(in);
+        }
+
+        @Override
+        public MovieCollectionSummary[] newArray(int size) {
+            return new MovieCollectionSummary[size];
+        }
+    };
 
     public Long getId() {
         return id;
@@ -27,5 +53,23 @@ public class MovieCollectionSummary {
 
     public String getBackdropPath() {
         return backdropPath;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        dest.writeString(name);
+        dest.writeString(posterPath);
+        dest.writeString(backdropPath);
     }
 }

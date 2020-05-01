@@ -1,7 +1,9 @@
 package com.example.android.popularmovies;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.popularmovies.model.MovieDetail;
 import com.example.android.popularmovies.model.MovieSummary;
 import com.example.android.popularmovies.model.PagedMoviesResponse;
 import com.example.android.popularmovies.repository.movie.TheMovieDbDotOrg;
@@ -23,7 +26,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMovieClickHandler {
     enum MoviesType { POPULAR, TOP_RATED }
 
     private static final int numberOfColumns = 2;
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        movieAdapter = new MovieAdapter(imageHeight, imageWidth);
+        movieAdapter = new MovieAdapter(this, imageHeight, imageWidth);
 
         moviePosters = findViewById(R.id.rv_movie_posters);
         moviePosters.setLayoutManager(twoColumnGrid);
@@ -73,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
         loadingIndicator = findViewById(R.id.pb_loading_indicator);
 
         loadMoviesData();
+    }
+
+    @Override
+    public void onMovieClick(MovieSummary m) {
+        String apiKey = getString(R.string.themoviedb_api_key_v3);
+        new FetchMovieDetailsTask(this).execute(apiKey, m.getId());
     }
 
     private void loadMoviesData() {
@@ -189,6 +198,44 @@ public class MainActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    static class FetchMovieDetailsTask extends AsyncTask<Object, Void, MovieDetail> {
+        private WeakReference<MainActivity> weakActivity;
+
+        FetchMovieDetailsTask(MainActivity activity) {
+            weakActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        protected MovieDetail doInBackground(Object... objects) {
+            MainActivity ma = weakActivity.get();
+
+            if (ma != null) {
+                String apiKey = (String) objects[0];
+                Long movieId = (Long) objects[1];
+
+                try {
+                    return TheMovieDbDotOrg.getMovieDetail(apiKey, movieId);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(MovieDetail movieDetail) {
+            MainActivity ma = weakActivity.get();
+
+            if (ma != null) {
+                Intent movieIntent = new Intent(ma, MovieDetailActivity.class);
+                movieIntent.putExtra(MovieDetailActivity.MOVIE_DETAIL, (Parcelable ) movieDetail);
+                ma.startActivity(movieIntent);
+            }
         }
     }
 }

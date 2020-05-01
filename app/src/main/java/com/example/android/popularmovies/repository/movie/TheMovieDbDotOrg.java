@@ -3,6 +3,7 @@ package com.example.android.popularmovies.repository.movie;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.example.android.popularmovies.model.MovieDetail;
 import com.example.android.popularmovies.model.PagedMoviesResponse;
 import com.example.android.popularmovies.utils.JsonUtils;
 
@@ -18,20 +19,31 @@ public class TheMovieDbDotOrg {
     private static final String LANGUAGE = "en-US";
 
     public static PagedMoviesResponse getPopularMovies(String apiKey, int page) throws IOException {
-        return getPopularMoviesResponse(POPULAR, apiKey, page);
+        String apiResponse = getApiResponse(apiKey, POPULAR, page);
+        return JsonUtils.pagedMoviesResponseFrom(apiResponse);
     }
 
     public static PagedMoviesResponse getTopRatedMovies(String apiKey, int page) throws IOException {
-        return getPopularMoviesResponse(TOP_RATED, apiKey, page);
+        String apiResponse = getApiResponse(apiKey, TOP_RATED, page);
+        return JsonUtils.pagedMoviesResponseFrom(apiResponse);
     }
 
-    private static PagedMoviesResponse getPopularMoviesResponse(String type, String apiKey, int page) throws IOException {
-        Uri builtUri = Uri.parse(TextUtils.join("/", new String[]{ BASE_URL, type}))
+    public static MovieDetail getMovieDetail(String apiKey, long movieId) throws IOException {
+        String apiResponse = getApiResponse(apiKey, String.valueOf(movieId), 0);
+        return JsonUtils.movieDetailFrom(apiResponse);
+    }
+
+    private static String getApiResponse(String apiKey, String type, int page) throws IOException {
+        Uri.Builder builder = Uri.parse(TextUtils.join("/", new String[]{BASE_URL, type}))
             .buildUpon()
             .appendQueryParameter("language", LANGUAGE)
-            .appendQueryParameter("page", String.valueOf(page))
-            .appendQueryParameter("api_key", apiKey)
-            .build();
+            .appendQueryParameter("api_key", apiKey);
+
+        if (page > 0) {
+            builder.appendQueryParameter("page", String.valueOf(page));
+        }
+
+        Uri builtUri = builder.build();
 
         URL url = new URL(builtUri.toString());
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -39,8 +51,7 @@ public class TheMovieDbDotOrg {
         try {
             Scanner scanner = new Scanner(urlConnection.getInputStream());
             scanner.useDelimiter("\\A");
-            String json = scanner.hasNext() ? scanner.next() : null;
-            return JsonUtils.pagedMoviesResponseFrom(json);
+            return scanner.hasNext() ? scanner.next() : null;
         } finally {
             urlConnection.disconnect();
         }
