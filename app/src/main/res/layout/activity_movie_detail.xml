@@ -1,89 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MovieDetailActivity">
+    android:layout_height="match_parent">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/tv_movie_title_detail"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:padding="32dp"
-        android:background="@color/secondaryColor"
-        android:textColor="@color/primaryTextColor"
-        style="@style/TextAppearance.AppCompat.Display2"
-        app:autoSizeTextType="uniform"
-        tools:text="Movie Title" />
-
-    <!-- Poster, Year, Run Length, Rating -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:padding="16dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".MovieDetailActivity">
 
-        <!-- Poster -->
-        <ImageView
-            android:id="@+id/iv_movie_poster"
-            android:layout_width="150dp"
-            android:layout_height="225dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            tools:src="@drawable/no_poster_available"
-            android:contentDescription="@string/movie_poster_content_description" />
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tv_movie_title_detail"
+            style="@style/TextAppearance.AppCompat.Display2"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/secondaryColor"
+            android:padding="32dp"
+            android:textColor="@color/primaryTextColor"
+            app:autoSizeTextType="uniform"
+            tools:text="Movie Title" />
 
-        <!-- Year, Run Time, Rating -->
+        <!-- Poster, Year, Run Length, Rating -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:orientation="vertical">
+            android:layout_height="250dp"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-            <!-- Year -->
-            <TextView
-                android:id="@+id/tv_movie_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.Display1"
-                android:textColor="@android:color/darker_gray"
-                tools:text="2020" />
+            <!-- Poster -->
+            <ImageView
+                android:id="@+id/iv_movie_poster"
+                android:layout_width="150dp"
+                android:layout_height="225dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/movie_poster_content_description"
+                tools:src="@drawable/no_poster_available" />
 
-            <!-- Run Time -->
-            <TextView
-                android:id="@+id/tv_runtime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.Headline"
-                android:textStyle="italic|bold"
-                android:textColor="@android:color/darker_gray"
-                tools:text="120min" />
+            <!-- Year, Run Time, Rating -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <!-- Rating -->
-            <TextView
-                android:id="@+id/tv_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                style="@style/TextAppearance.AppCompat.Medium"
-                tools:text="8.1/10" />
+                <!-- Year -->
+                <TextView
+                    android:id="@+id/tv_movie_year"
+                    style="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/darker_gray"
+                    tools:text="2020" />
+
+                <!-- Run Time -->
+                <TextView
+                    android:id="@+id/tv_runtime"
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/darker_gray"
+                    android:textStyle="italic|bold"
+                    tools:text="120min" />
+
+                <!-- Rating -->
+                <TextView
+                    android:id="@+id/tv_rating"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    tools:text="8.1/10" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <!-- Overview -->
+        <TextView
+            android:id="@+id/tv_overview"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="@android:color/darker_gray"
+            tools:text="A paragrahph's worth of overview text goes here." />
 
     </LinearLayout>
-
-    <!-- Overview -->
-    <TextView
-        android:id="@+id/tv_overview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textColor="@android:color/darker_gray"
-        style="@style/TextAppearance.AppCompat.Body1"
-        tools:text="A paragrahph's worth of overview text goes here." />
-
-</LinearLayout>
+</ScrollView>
